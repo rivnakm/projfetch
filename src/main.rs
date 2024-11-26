@@ -19,6 +19,10 @@ struct Args {
     /// Number of entries to show
     #[arg(short = 'n', long, default_value_t = 10, conflicts_with = "all")]
     count: usize,
+
+    /// List recognized files and their results
+    #[arg(short, long)]
+    debug: bool,
 }
 
 fn main() {
@@ -39,8 +43,7 @@ fn main() {
                     };
                     let sloc = read_sloc(entry.path());
 
-                    #[cfg(debug_assertions)]
-                    {
+                    if args.debug {
                         eprintln!(
                             "{}: {}, {} lines",
                             entry.path().to_string_lossy(),

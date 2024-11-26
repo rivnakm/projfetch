@@ -35,6 +35,7 @@ pub enum Language {
     TypeScript,
     V,
     VisualBasic,
+    Vue,
     Xaml,
     Zig,
 }
@@ -88,6 +89,7 @@ impl Language {
             Language::Shell => Color::Rgb(80, 80, 80),
             Language::TypeScript => Color::Rgb(49, 120, 198),
             Language::V => Color::Rgb(60, 86, 109),
+            Language::Vue => Color::Rgb(65, 184, 131),
             Language::Zig => Color::Rgb(247, 164, 66),
         }
     }
@@ -152,6 +154,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             "ts" => Some(Language::TypeScript),
             "v" => Some(Language::V),
             "vb" => Some(Language::VisualBasic),
+            "vue" => Some(Language::Vue),
             "xaml" => Some(Language::Xaml),
             "zig" => Some(Language::Zig),
             "zsh" => Some(Language::Shell),
