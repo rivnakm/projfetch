@@ -342,7 +342,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "profetch"
+name = "projfetch"
 version = "0.1.0"
 dependencies = [
  "clap",
