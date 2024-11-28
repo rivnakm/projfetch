@@ -101,7 +101,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             "CMakeLists.txt" => return Some(Language::CMake),
             "Containerfile" => return Some(Language::Dockerfile),
             "Dockerfile" => return Some(Language::Dockerfile),
-            "Makefile" => return Some(Language::Makefile),
+            "Makefile" | "makefile" => return Some(Language::Makefile),
             _ => (),
         },
         None => return None,

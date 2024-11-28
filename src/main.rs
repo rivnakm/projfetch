@@ -35,10 +35,13 @@ fn main() {
 
     for entry in walk {
         match entry {
-            Err(_) => (),
+            Err(e) => eprintln!("Error: {}", e),
             Ok(entry) => {
                 if entry.file_type().unwrap().is_file() {
                     let Some(lang) = lang::determine_language(entry.path().to_path_buf()) else {
+                        if args.debug {
+                            eprintln!("{}: unrecognized file", entry.path().to_string_lossy())
+                        }
                         continue;
                     };
                     let sloc = read_sloc(entry.path());
