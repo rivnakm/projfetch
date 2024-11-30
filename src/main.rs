@@ -23,16 +23,30 @@ struct Args {
     /// List recognized files and their results
     #[arg(short, long)]
     debug: bool,
+
+    /// Path to search
+    path: Option<String>,
 }
 
 fn main() {
     let args = Args::parse();
 
-    let mut results: HashMap<Language, usize> = HashMap::new();
-    let pwd = std::env::current_dir().unwrap();
+    let pwd = match args.path {
+        Some(p) => Path::new(&p).canonicalize(),
+        None => std::env::current_dir(),
+    };
+    let pwd = match pwd {
+        Ok(p) => p,
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            return;
+        }
+    };
+
     let builder = WalkBuilder::new(pwd.clone());
     let walk = builder.build();
 
+    let mut results: HashMap<Language, usize> = HashMap::new();
     for entry in walk {
         match entry {
             Err(e) => eprintln!("Error: {}", e),
