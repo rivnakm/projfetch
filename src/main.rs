@@ -1,11 +1,13 @@
 use std::{collections::HashMap, path::Path};
 
 use clap::Parser;
+use comments::CodeReader;
 use display::print_results;
 use ignore::WalkBuilder;
 use itertools::Itertools;
 use lang::Language;
 
+mod comments;
 mod display;
 mod lang;
 
@@ -58,7 +60,9 @@ fn main() {
                         }
                         continue;
                     };
-                    let sloc = read_sloc(entry.path());
+                    let reader =
+                        CodeReader::from_path(entry.path(), lang).expect("Unable to read file");
+                    let sloc = reader.sloc();
 
                     if args.debug {
                         eprintln!(
@@ -88,15 +92,4 @@ fn main() {
     };
 
     print_results(results, &pwd);
-}
-
-fn read_sloc(path: &Path) -> usize {
-    let mut sloc = 0;
-    for line in std::fs::read_to_string(path).unwrap().lines() {
-        if !line.is_empty() {
-            sloc += 1
-        }
-    }
-
-    sloc
 }

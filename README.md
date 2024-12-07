@@ -53,6 +53,4 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - TypeScript
 - V
 - Visual Basic
-- Vue
-- Xaml
 - Zig

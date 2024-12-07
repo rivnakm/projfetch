@@ -35,8 +35,6 @@ pub enum Language {
     TypeScript,
     V,
     VisualBasic,
-    Vue,
-    Xaml,
     Zig,
 }
 
@@ -49,7 +47,6 @@ impl Display for Language {
             Language::FSharp => "F#",
             Language::Php => "PHP",
             Language::VisualBasic => "Visual Basic",
-            Language::Xaml => "XAML",
             _ => &format!("{:?}", self),
         };
         write!(f, "{}", name)
@@ -64,7 +61,7 @@ impl Language {
             Language::CMake => Color::Rgb(0, 143, 186),
             Language::Cobol => Color::Rgb(222, 209, 180),
             Language::CPlusPlus => Color::Rgb(0, 89, 156),
-            Language::CSharp | Language::VisualBasic | Language::Xaml => Color::Rgb(81, 43, 212),
+            Language::CSharp | Language::VisualBasic => Color::Rgb(81, 43, 212),
             Language::D => Color::Rgb(152, 49, 42),
             Language::Dart => Color::Rgb(1, 117, 194),
             Language::Dockerfile => Color::Rgb(29, 99, 237),
@@ -89,7 +86,6 @@ impl Language {
             Language::Shell => Color::Rgb(80, 80, 80),
             Language::TypeScript => Color::Rgb(49, 120, 198),
             Language::V => Color::Rgb(60, 86, 109),
-            Language::Vue => Color::Rgb(65, 184, 131),
             Language::Zig => Color::Rgb(247, 164, 66),
         }
     }
@@ -112,7 +108,6 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
         Some(os_str) => Some(match os_str.as_encoded_bytes() {
             b"adb" => Language::Ada,
             b"ads" => Language::Ada,
-            b"axaml" => Language::Xaml,
             b"bash" => Language::Shell,
             b"c" => Language::C,
             b"cc" => Language::CPlusPlus,
@@ -154,8 +149,6 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"ts" => Language::TypeScript,
             b"v" => Language::V,
             b"vb" => Language::VisualBasic,
-            b"vue" => Language::Vue,
-            b"xaml" => Language::Xaml,
             b"zig" => Language::Zig,
             b"zsh" => Language::Shell,
             _ => return None,
@@ -166,7 +159,9 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
 fn disambiguate_header(path: PathBuf) -> Language {
     let contents = std::fs::read_to_string(path).unwrap();
 
-    if contents.contains("class")
+    if contents.contains("<string>")
+        || contents.contains("<vector>")
+        || contents.contains("<iostream>")
         || contents.contains("template")
         || contents.contains("extern \"C\"")
     {
