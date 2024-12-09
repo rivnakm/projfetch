@@ -80,7 +80,7 @@ impl Language {
             Language::Perl => Color::Rgb(57, 69, 126),
             Language::Php => Color::Rgb(119, 123, 179),
             Language::Powershell => Color::Rgb(83, 145, 254),
-            Language::Python => Color::Rgb(54, 112, 160),
+            Language::Python => Color::Rgb(255, 221, 84),
             Language::Ruby => Color::Rgb(204, 52, 45),
             Language::Rust => Color::Rgb(255, 67, 0),
             Language::Shell => Color::Rgb(80, 80, 80),
