@@ -163,6 +163,7 @@ fn disambiguate_header(path: PathBuf) -> Language {
         || contents.contains("<vector>")
         || contents.contains("<iostream>")
         || contents.contains("template")
+        || contents.contains("namespace")
         || contents.contains("extern \"C\"")
     {
         return Language::CPlusPlus;
