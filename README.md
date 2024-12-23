@@ -47,6 +47,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - PHP
 - Powershell
 - Python
+- QML
 - Ruby
 - Rust
 - Shell

@@ -88,6 +88,7 @@ fn comment_token(lang: Language) -> String {
         | Language::Perl
         | Language::Powershell
         | Language::Python
+        | Language::Qml
         | Language::Ruby
         | Language::Shell => "#",
         Language::C
@@ -124,6 +125,7 @@ fn block_comment_tokens(lang: Language) -> Option<(String, String)> {
         | Language::JavaScript
         | Language::Nix
         | Language::Php
+        | Language::Qml
         | Language::TypeScript
         | Language::V => Some(("/*", "*/")),
         Language::CMake => Some(("#[[", "]]")),
