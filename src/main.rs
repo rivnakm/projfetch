@@ -2,7 +2,7 @@ use std::{collections::HashMap, path::Path};
 
 use clap::Parser;
 use comments::CodeReader;
-use display::print_results;
+use display::{print_results, print_results_compact};
 use ignore::WalkBuilder;
 use itertools::Itertools;
 use lang::Language;
@@ -25,6 +25,14 @@ struct Args {
     /// List recognized files and their results
     #[arg(short, long)]
     debug: bool,
+
+    /// Display results in a single line
+    #[arg(short, long, conflicts_with_all = ["all", "count"])]
+    compact: bool,
+
+    /// Max width for compact mode
+    #[arg(short, long, requires = "compact")]
+    max_width: Option<u16>,
 
     /// Path to search
     path: Option<String>,
@@ -84,6 +92,11 @@ fn main() {
     }
 
     let results = results.into_iter().sorted_by(|a, b| Ord::cmp(&b.1, &a.1));
+
+    if args.compact {
+        print_results_compact(results.collect(), args.max_width);
+        return;
+    }
 
     let results: Vec<_> = if args.all {
         results.collect()

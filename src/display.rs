@@ -2,9 +2,62 @@ use std::path::Path;
 
 use crossterm::{cursor::MoveToColumn, ExecutableCommand};
 use human_repr::HumanCount;
-use termcolor::{ColorChoice, ColorSpec, StandardStream, WriteColor};
+use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 use crate::lang::Language;
+
+pub fn print_results_compact(results: Vec<(Language, usize)>, max_width: Option<u16>) {
+    if results.is_empty() {
+        return;
+    }
+
+    let total_lines = results.iter().map(|r| r.1).sum::<usize>();
+    let window_size = crossterm::terminal::window_size().expect("Couldn't get terminal size");
+    let columns = match max_width {
+        Some(max_width) => max_width.min(window_size.columns),
+        None => window_size.columns,
+    };
+
+    let mut current_width = 0;
+
+    let mut stdstream_stdout = StandardStream::stdout(ColorChoice::Always);
+    for (lang, lines) in results {
+        let result_width = ((lines as f32 / total_lines as f32) * columns as f32).round() as u16;
+        if result_width <= 1 {
+            // Blocks are too small now, just print "Other"
+            let other_bg = Color::Rgb(128, 128, 128);
+            let fg = foreground_color(other_bg);
+
+            let name = "Other";
+            let block = (0..(columns - current_width) as usize)
+                .map(|i| name.chars().nth(i).unwrap_or(' '))
+                .collect::<String>();
+
+            stdstream_stdout
+                .set_color(ColorSpec::new().set_bg(Some(other_bg)).set_fg(Some(fg)))
+                .unwrap();
+            print!("{}", block);
+
+            break;
+        }
+
+        let fg = foreground_color(lang.color());
+
+        let name = lang.to_string();
+        let block = (0..result_width as usize)
+            .map(|i| name.chars().nth(i).unwrap_or(' '))
+            .collect::<String>();
+
+        stdstream_stdout
+            .set_color(ColorSpec::new().set_bg(Some(lang.color())).set_fg(Some(fg)))
+            .unwrap();
+        print!("{}", block);
+
+        current_width += result_width;
+    }
+    stdstream_stdout.reset().unwrap();
+    println!();
+}
 
 pub fn print_results(results: Vec<(Language, usize)>, pwd: &Path) {
     if results.is_empty() {
@@ -68,5 +121,53 @@ pub fn print_results(results: Vec<(Language, usize)>, pwd: &Path) {
             .execute(MoveToColumn(lines_col_start))
             .unwrap();
         println!("{}", lines);
+    }
+}
+
+fn foreground_color(background: Color) -> Color {
+    let Color::Rgb(r, g, b) = background else {
+        panic!("Cannot calculate forground color for non-RGB color");
+    };
+
+    let r = r as f32 / 255.0;
+    let g = g as f32 / 255.0;
+    let b = b as f32 / 255.0;
+
+    const WHITE_LUMINANCE: f32 = 1.0;
+    const BLACK_LUMINANCE: f32 = 0.0;
+    let perceived_luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+    let white_foreground_contrast = contrast_ratio(WHITE_LUMINANCE, perceived_luminance);
+    let black_foreground_contrast = contrast_ratio(BLACK_LUMINANCE, perceived_luminance);
+
+    if black_foreground_contrast > white_foreground_contrast {
+        Color::Black
+    } else {
+        Color::White
+    }
+}
+
+fn contrast_ratio(l1: f32, l2: f32) -> f32 {
+    if l1 > l2 {
+        (l1 + 0.05) / (l2 + 0.05)
+    } else {
+        (l2 + 0.05) / (l1 + 0.05)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test_case::test_case;
+
+    #[test_case(Color::Rgb(0, 0, 0), Color::White)]
+    #[test_case(Color::Rgb(255, 255, 255), Color::Black)]
+    #[test_case(Color::Rgb(255, 0, 0), Color::Black)]
+    #[test_case(Color::Rgb(0, 255, 0), Color::Black)]
+    #[test_case(Color::Rgb(0, 0, 255), Color::White)]
+    fn test_foreground_color(bg: Color, fg: Color) {
+        let actual = foreground_color(bg);
+
+        assert_eq!(actual, fg);
     }
 }

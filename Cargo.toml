@@ -1,6 +1,6 @@
 [package]
 name = "projfetch"
-version = "0.3.3"
+version = "0.4.0"
 edition = "2021"
 
 [dependencies]
@@ -10,3 +10,6 @@ human-repr = "1.1.0"
 ignore = "0.4.22"
 itertools = "0.13.0"
 termcolor = "1.4.1"
+
+[dev-dependencies]
+test-case = "3.3.1"

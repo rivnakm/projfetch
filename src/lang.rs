@@ -47,6 +47,7 @@ impl Display for Language {
             Language::CSharp => "C#",
             Language::FSharp => "F#",
             Language::Php => "PHP",
+            Language::Qml => "QML",
             Language::VisualBasic => "Visual Basic",
             _ => &format!("{:?}", self),
         };
