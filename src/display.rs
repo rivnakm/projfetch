@@ -146,9 +146,9 @@ fn foreground_color(background: Color) -> Color {
     let black_foreground_contrast = contrast_ratio(BLACK_LUMINANCE, perceived_luminance);
 
     if black_foreground_contrast > white_foreground_contrast {
-        Color::Black
+        Color::Rgb(0, 0, 0) // Color::Black is dependent on the terminal color scheme
     } else {
-        Color::White
+        Color::Rgb(255, 255, 255)
     }
 }
 
@@ -165,11 +165,11 @@ mod tests {
     use super::*;
     use test_case::test_case;
 
-    #[test_case(Color::Rgb(0, 0, 0), Color::White)]
-    #[test_case(Color::Rgb(255, 255, 255), Color::Black)]
-    #[test_case(Color::Rgb(255, 0, 0), Color::Black)]
-    #[test_case(Color::Rgb(0, 255, 0), Color::Black)]
-    #[test_case(Color::Rgb(0, 0, 255), Color::White)]
+    #[test_case(Color::Rgb(0, 0, 0), Color::Rgb(255, 255, 255))]
+    #[test_case(Color::Rgb(255, 255, 255), Color::Rgb(0, 0, 0))]
+    #[test_case(Color::Rgb(255, 0, 0), Color::Rgb(0, 0, 0))]
+    #[test_case(Color::Rgb(0, 255, 0), Color::Rgb(0, 0, 0))]
+    #[test_case(Color::Rgb(0, 0, 255), Color::Rgb(255, 255, 255))]
     fn test_foreground_color(bg: Color, fg: Color) {
         let actual = foreground_color(bg);
 
