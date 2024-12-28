@@ -49,7 +49,12 @@ pub fn print_results_compact(results: Vec<(Language, usize)>, max_width: Option<
             .collect::<String>();
 
         stdstream_stdout
-            .set_color(ColorSpec::new().set_bg(Some(lang.color())).set_fg(Some(fg)))
+            .set_color(
+                ColorSpec::new()
+                    .set_bg(Some(lang.color()))
+                    .set_fg(Some(fg))
+                    .set_bold(true),
+            )
             .unwrap();
         print!("{}", block);
 
