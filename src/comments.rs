@@ -82,6 +82,7 @@ fn comment_token(lang: Language) -> String {
         Language::CMake
         | Language::Dockerfile
         | Language::Julia
+        | Language::Gherkin
         | Language::Makefile
         | Language::Nim
         | Language::Nix
