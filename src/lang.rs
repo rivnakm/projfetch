@@ -82,7 +82,7 @@ impl Language {
             Language::Makefile => Color::Rgb(63, 63, 63), // rgb(63, 63, 63)
             Language::Nim => Color::Rgb(255, 233, 83), // rgb(255, 233, 83)
             Language::Nix => Color::Rgb(126, 126, 255), // rgb(126, 126, 255)
-            Language::Nu => Color::Rgb(61, 214, 140), // rgb(61, 214, 140)
+            Language::Nu => Color::Rgb(78, 154, 6), // rgb(78, 154, 6)
             Language::OCaml => Color::Rgb(238, 106, 26), // rgb(238, 106, 26)
             Language::Perl => Color::Rgb(57, 69, 126), // rgb(57, 69, 126)
             Language::Php => Color::Rgb(119, 123, 179), // rgb(119, 123, 179)
