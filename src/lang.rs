@@ -25,6 +25,7 @@ pub enum Language {
     Makefile,
     Nim,
     Nix,
+    Nu,
     OCaml,
     Perl,
     Php,
@@ -59,39 +60,41 @@ impl Display for Language {
 impl Language {
     pub fn color(&self) -> Color {
         match self {
-            Language::Ada => Color::Rgb(0, 0, 255),
-            Language::C => Color::Rgb(0, 89, 156),
-            Language::CMake => Color::Rgb(0, 143, 186),
-            Language::Cobol => Color::Rgb(222, 209, 180),
-            Language::CPlusPlus => Color::Rgb(0, 89, 156),
-            Language::CSharp | Language::VisualBasic => Color::Rgb(81, 43, 212),
-            Language::D => Color::Rgb(152, 49, 42),
-            Language::Dart => Color::Rgb(1, 117, 194),
-            Language::Dockerfile => Color::Rgb(29, 99, 237),
-            Language::Fortran => Color::Rgb(115, 79, 150),
-            Language::FSharp => Color::Rgb(48, 185, 219),
-            Language::Gherkin => Color::Rgb(0, 168, 24),
-            Language::Go => Color::Rgb(1, 173, 216),
-            Language::Haskell => Color::Rgb(94, 80, 134),
-            Language::Java => Color::Rgb(248, 152, 29),
-            Language::JavaScript => Color::Rgb(240, 219, 79),
-            Language::Julia => Color::Rgb(149, 88, 178),
-            Language::Lua => Color::Rgb(0, 0, 128),
-            Language::Makefile => Color::Rgb(63, 63, 63),
-            Language::Nim => Color::Rgb(255, 233, 83),
-            Language::Nix => Color::Rgb(126, 126, 255),
-            Language::OCaml => Color::Rgb(238, 106, 26),
-            Language::Perl => Color::Rgb(57, 69, 126),
-            Language::Php => Color::Rgb(119, 123, 179),
-            Language::Powershell => Color::Rgb(83, 145, 254),
-            Language::Python => Color::Rgb(255, 221, 84),
-            Language::Qml => Color::Rgb(44, 222, 133),
-            Language::Ruby => Color::Rgb(204, 52, 45),
-            Language::Rust => Color::Rgb(255, 67, 0),
-            Language::Shell => Color::Rgb(80, 80, 80),
-            Language::TypeScript => Color::Rgb(49, 120, 198),
-            Language::V => Color::Rgb(60, 86, 109),
-            Language::Zig => Color::Rgb(247, 164, 66),
+            // The color comments are just for nvim-highlight-colors
+            Language::Ada => Color::Rgb(0, 0, 255), // rgb(0, 0, 255)
+            Language::C => Color::Rgb(0, 89, 156),  // rgb(0, 89, 156)
+            Language::CMake => Color::Rgb(0, 143, 186), // rgb(0, 143, 186)
+            Language::Cobol => Color::Rgb(222, 209, 180), // rgb(222, 209, 180)
+            Language::CPlusPlus => Color::Rgb(0, 89, 156), // rgb(0, 89, 156)
+            Language::CSharp | Language::VisualBasic => Color::Rgb(81, 43, 212), // rgb(81, 43, 212)
+            Language::D => Color::Rgb(152, 49, 42), // rgb(152, 49, 42)
+            Language::Dart => Color::Rgb(1, 117, 194), // rgb(1, 117, 194)
+            Language::Dockerfile => Color::Rgb(29, 99, 237), // rgb(29, 99, 237)
+            Language::Fortran => Color::Rgb(115, 79, 150), // rgb(115, 79, 150)
+            Language::FSharp => Color::Rgb(48, 185, 219), // rgb(48, 185, 219)
+            Language::Gherkin => Color::Rgb(0, 168, 24), // rgb(0, 168, 24)
+            Language::Go => Color::Rgb(1, 173, 216), // rgb(1, 173, 216)
+            Language::Haskell => Color::Rgb(94, 80, 134), // rgb(94, 80, 134)
+            Language::Java => Color::Rgb(248, 152, 29), // rgb(248, 152, 29)
+            Language::JavaScript => Color::Rgb(240, 219, 79), // rgb(240, 219, 79)
+            Language::Julia => Color::Rgb(149, 88, 178), // rgb(149, 88, 178)
+            Language::Lua => Color::Rgb(0, 0, 128), // rgb(0, 0, 128)
+            Language::Makefile => Color::Rgb(63, 63, 63), // rgb(63, 63, 63)
+            Language::Nim => Color::Rgb(255, 233, 83), // rgb(255, 233, 83)
+            Language::Nix => Color::Rgb(126, 126, 255), // rgb(126, 126, 255)
+            Language::Nu => Color::Rgb(61, 214, 140), // rgb(61, 214, 140)
+            Language::OCaml => Color::Rgb(238, 106, 26), // rgb(238, 106, 26)
+            Language::Perl => Color::Rgb(57, 69, 126), // rgb(57, 69, 126)
+            Language::Php => Color::Rgb(119, 123, 179), // rgb(119, 123, 179)
+            Language::Powershell => Color::Rgb(83, 145, 254), // rgb(83, 145, 254)
+            Language::Python => Color::Rgb(255, 221, 84), // rgb(255, 221, 84)
+            Language::Qml => Color::Rgb(44, 222, 133), // rgb(44, 222, 133)
+            Language::Ruby => Color::Rgb(204, 52, 45), // rgb(204, 52, 45)
+            Language::Rust => Color::Rgb(255, 67, 0), // rgb(255, 67, 0)
+            Language::Shell => Color::Rgb(80, 80, 80), // rgb(80, 80, 80)
+            Language::TypeScript => Color::Rgb(49, 120, 198), // rgb(49, 120, 198)
+            Language::V => Color::Rgb(60, 86, 109), // rgb(60, 86, 109)
+            Language::Zig => Color::Rgb(247, 164, 66), // rgb(247, 164, 66)
         }
     }
 }
@@ -145,6 +148,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"mpp" => Language::CPlusPlus,
             b"nim" => Language::Nim,
             b"nix" => Language::Nix,
+            b"nu" => Language::Nu,
             b"php" => Language::Php,
             b"pl" => Language::Perl,
             b"ps1" => Language::Powershell,

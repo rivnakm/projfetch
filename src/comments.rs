@@ -86,6 +86,7 @@ fn comment_token(lang: Language) -> String {
         | Language::Makefile
         | Language::Nim
         | Language::Nix
+        | Language::Nu
         | Language::Perl
         | Language::Powershell
         | Language::Python
