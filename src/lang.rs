@@ -13,6 +13,7 @@ pub enum Language {
     D,
     Dart,
     Dockerfile,
+    Fish,
     Fortran,
     FSharp,
     Gherkin,
@@ -70,6 +71,7 @@ impl Language {
             Language::D => Color::Rgb(152, 49, 42), // rgb(152, 49, 42)
             Language::Dart => Color::Rgb(1, 117, 194), // rgb(1, 117, 194)
             Language::Dockerfile => Color::Rgb(29, 99, 237), // rgb(29, 99, 237)
+            Language::Fish => Color::Rgb(180, 180, 180), // rgb(180, 180, 180)
             Language::Fortran => Color::Rgb(115, 79, 150), // rgb(115, 79, 150)
             Language::FSharp => Color::Rgb(48, 185, 219), // rgb(48, 185, 219)
             Language::Gherkin => Color::Rgb(0, 168, 24), // rgb(0, 168, 24)
@@ -127,13 +129,13 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"d" => Language::D,
             b"dart" => Language::Dart,
             b"f" => Language::Fortran,
-            b"feature" => Language::Gherkin,
             b"for" => Language::Fortran,
             b"f90" => Language::Fortran,
             b"f95" => Language::Fortran,
             b"f03" => Language::Fortran,
             b"f15" => Language::Fortran,
-            b"fish" => Language::Shell,
+            b"feature" => Language::Gherkin,
+            b"fish" => Language::Fish,
             b"fs" => Language::FSharp,
             b"go" => Language::Go,
             b"h" => disambiguate_header(path),

@@ -81,6 +81,7 @@ fn comment_token(lang: Language) -> String {
     match lang {
         Language::CMake
         | Language::Dockerfile
+        | Language::Fish
         | Language::Julia
         | Language::Gherkin
         | Language::Makefile
