@@ -2,7 +2,7 @@ use std::{collections::HashMap, path::Path};
 
 use clap::Parser;
 use comments::CodeReader;
-use display::{print_results, print_results_compact};
+use display::{print_results, print_results_compact, print_results_summary};
 use ignore::WalkBuilder;
 use itertools::Itertools;
 use lang::Language;
@@ -27,12 +27,20 @@ struct Args {
     debug: bool,
 
     /// Display results in a single line
-    #[arg(short, long, conflicts_with_all = ["all", "count"])]
+    #[arg(short, long, conflicts_with_all = ["all", "count", "summary"])]
     compact: bool,
 
     /// Max width for compact mode
     #[arg(short, long, requires = "compact")]
     max_width: Option<u16>,
+
+    /// Display text summary of the top n languages
+    #[arg(short, long, conflicts_with_all = ["all", "count", "compact"])]
+    summary: bool,
+
+    /// Number of languages to display in summary mode
+    #[arg(short = 'u', long, default_value_t = 3, requires = "summary")]
+    summary_length: usize,
 
     /// Path to search
     path: Option<String>,
@@ -95,6 +103,9 @@ fn main() {
 
     if args.compact {
         print_results_compact(results.collect(), args.max_width);
+        return;
+    } else if args.summary {
+        print_results_summary(results.collect(), args.summary_length);
         return;
     }
 

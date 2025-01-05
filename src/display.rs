@@ -6,6 +6,38 @@ use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
 use crate::lang::Language;
 
+pub fn print_results_summary(results: Vec<(Language, usize)>, length: usize) {
+    let total_lines = results.iter().map(|r| r.1).sum::<usize>();
+    let mut stdstream_stdout = StandardStream::stdout(ColorChoice::Always);
+
+    let length = length.min(results.len());
+    let truncated = length < results.len();
+    for (i, (lang, lines)) in results.into_iter().take(length).enumerate() {
+        let percent = lines as f32 / total_lines as f32;
+
+        print!("{} (", lang);
+
+        stdstream_stdout
+            .set_color(ColorSpec::new().set_fg(Some(lang.color())))
+            .unwrap();
+        print!("{:.0}%", percent * 100.0);
+
+        stdstream_stdout.reset().unwrap();
+
+        if i < length - 1 {
+            print!("), ");
+        } else {
+            print!(")");
+        }
+    }
+
+    if truncated {
+        println!(", ...");
+    } else {
+        println!();
+    }
+}
+
 pub fn print_results_compact(results: Vec<(Language, usize)>, max_width: Option<u16>) {
     if results.is_empty() {
         return;
