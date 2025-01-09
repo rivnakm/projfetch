@@ -43,8 +43,8 @@ struct Args {
     summary_length: usize,
 
     /// Filter a language from result
-    #[arg(short = 'f', long)]
-    filter: Option<Vec<String>>,
+    #[arg(short, long)]
+    exclude: Option<Vec<String>>,
 
     /// Path to search
     path: Option<String>,
@@ -85,10 +85,10 @@ fn main() {
                     let sloc = reader.sloc();
 
                     if let std::collections::hash_map::Entry::Vacant(e) = results.entry(lang) {
-                        match args.filter {
+                        match args.exclude {
                             Some(ref arr) => {
-                                for filter in arr {
-                                    if lang.to_string().to_lowercase() == filter.to_lowercase() {
+                                for exclude in arr {
+                                    if lang.to_string().to_lowercase() == exclude.to_lowercase() {
                                         continue 'outer;
                                     }
                                 }
