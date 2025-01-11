@@ -42,6 +42,10 @@ struct Args {
     #[arg(short = 'u', long, default_value_t = 3, requires = "summary")]
     summary_length: usize,
 
+    /// Filter a language from result
+    #[arg(short, long)]
+    exclude: Option<Vec<String>>,
+
     /// Path to search
     path: Option<String>,
 }
@@ -65,7 +69,7 @@ fn main() {
     let walk = builder.build();
 
     let mut results: HashMap<Language, usize> = HashMap::new();
-    for entry in walk {
+    'outer: for entry in walk {
         match entry {
             Err(e) => eprintln!("Error: {}", e),
             Ok(entry) => {
@@ -80,6 +84,22 @@ fn main() {
                         CodeReader::from_path(entry.path(), lang).expect("Unable to read file");
                     let sloc = reader.sloc();
 
+                    if let std::collections::hash_map::Entry::Vacant(e) = results.entry(lang) {
+                        match args.exclude {
+                            Some(ref arr) => {
+                                for exclude in arr {
+                                    if lang.to_string().to_lowercase() == exclude.to_lowercase() {
+                                        continue 'outer;
+                                    }
+                                }
+                            },
+                            None => (),
+                        };
+                        e.insert(sloc);
+                    } else {
+                        *results.get_mut(&lang).unwrap() += sloc;
+                    }
+
                     if args.debug {
                         eprintln!(
                             "{}: {}, {} lines",
@@ -87,12 +107,6 @@ fn main() {
                             lang,
                             sloc
                         )
-                    }
-
-                    if let std::collections::hash_map::Entry::Vacant(e) = results.entry(lang) {
-                        e.insert(sloc);
-                    } else {
-                        *results.get_mut(&lang).unwrap() += sloc;
                     }
                 }
             }
