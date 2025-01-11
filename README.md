@@ -31,6 +31,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - D
 - Dart
 - Dockerfile
+- Fish
 - Fortran
 - F#
 - Go
@@ -42,6 +43,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - Makefile
 - Nim
 - Nix
+- Nu
 - OCaml
 - Perl
 - PHP
