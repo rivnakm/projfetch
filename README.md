@@ -54,6 +54,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - Powershell
 - Python
 - QML
+- Razor
 - React
 - Ruby
 - Rust
