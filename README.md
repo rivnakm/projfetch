@@ -23,8 +23,10 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 ## Supported filetypes
 
 - Ada
+- Astro
 - C
 - CMake
+- CSS
 - COBOL
 - C++
 - C#
@@ -36,6 +38,8 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - F#
 - Go
 - Haskell
+- HCL
+- HTML
 - Java
 - JavaScript
 - Julia
@@ -50,10 +54,13 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - Powershell
 - Python
 - QML
+- React
 - Ruby
 - Rust
 - Shell
+- Svelte
 - TypeScript
 - V
+- Vue
 - Visual Basic
 - Zig

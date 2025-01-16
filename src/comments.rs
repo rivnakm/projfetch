@@ -66,8 +66,10 @@ impl CodeReader {
                 continue;
             }
 
-            if line.starts_with(&comment_token) {
-                continue;
+            if let Some(ref comment_token) = comment_token {
+                if line.starts_with(comment_token) {
+                    continue;
+                }
             }
 
             sloc += 1;
@@ -77,51 +79,57 @@ impl CodeReader {
     }
 }
 
-fn comment_token(lang: Language) -> String {
-    match lang {
-        Language::CMake
-        | Language::Dockerfile
-        | Language::Fish
-        | Language::Julia
-        | Language::Gherkin
-        | Language::Makefile
-        | Language::Nim
-        | Language::Nix
-        | Language::Nu
-        | Language::Perl
-        | Language::Powershell
-        | Language::Python
-        | Language::Qml
-        | Language::Ruby
-        | Language::Shell => "#",
-        Language::C
-        | Language::CPlusPlus
-        | Language::CSharp
-        | Language::D
-        | Language::Dart
-        | Language::FSharp
-        | Language::Go
-        | Language::Java
-        | Language::JavaScript
-        | Language::Rust
-        | Language::TypeScript
-        | Language::V
-        | Language::Zig => "//",
-        Language::Ada | Language::Haskell | Language::Lua => "--",
-        Language::Cobol => "*>",
-        Language::Fortran => "!",
-        Language::OCaml => "\0", // OCaml doesn't technically have single line comments
-        Language::Php => "//",   // FIXME: '#' is also valid
-        Language::VisualBasic => "'",
-    }
-    .into()
+fn comment_token(lang: Language) -> Option<String> {
+    Some(
+        match lang {
+            Language::CMake
+            | Language::Dockerfile
+            | Language::Fish
+            | Language::Gherkin
+            | Language::Hcl
+            | Language::Julia
+            | Language::Makefile
+            | Language::Nim
+            | Language::Nix
+            | Language::Nu
+            | Language::Perl
+            | Language::Powershell
+            | Language::Python
+            | Language::Qml
+            | Language::Ruby
+            | Language::Shell => "#",
+            Language::C
+            | Language::CPlusPlus
+            | Language::CSharp
+            | Language::D
+            | Language::Dart
+            | Language::FSharp
+            | Language::Go
+            | Language::Java
+            | Language::JavaScript
+            | Language::React
+            | Language::Rust
+            | Language::TypeScript
+            | Language::V
+            | Language::Zig => "//",
+            Language::Ada | Language::Haskell | Language::Lua => "--",
+            Language::Cobol => "*>",
+            Language::Fortran => "!",
+            Language::OCaml => "\0", // OCaml doesn't technically have single line comments
+            Language::Php => "//",   // FIXME: '#' is also valid
+            Language::VisualBasic => "'",
+            _ => return None,
+        }
+        .into(),
+    )
 }
 
 fn block_comment_tokens(lang: Language) -> Option<(String, String)> {
-    match lang {
+    let tokens = match lang {
         Language::C
         | Language::CPlusPlus
         | Language::CSharp
+        | Language::Css
         | Language::Dart
         | Language::Go
         | Language::Java
@@ -129,24 +137,27 @@ fn block_comment_tokens(lang: Language) -> Option<(String, String)> {
         | Language::Nix
         | Language::Php
         | Language::Qml
+        | Language::React
         | Language::TypeScript
-        | Language::V => Some(("/*", "*/")),
-        Language::CMake => Some(("#[[", "]]")),
-        Language::FSharp | Language::OCaml => Some(("(*", "*)")),
-        Language::Julia => Some(("#=", "=#")),
-        Language::Lua => Some(("--[[", "]]--")),
-        Language::Nim => Some(("#[", "]#")),
-        Language::Perl => Some(("=", "=cut")),
-        Language::Powershell => Some(("<#", "#>")),
-        Language::Python => Some(("'''", "'''")), // FIXME: '"""' is also valid
-        Language::Ruby => Some(("=begin", "=end")),
+        | Language::V => ("/*", "*/"),
+        Language::CMake => ("#[[", "]]"),
+        Language::FSharp | Language::OCaml => ("(*", "*)"),
+        Language::Julia => ("#=", "=#"),
+        Language::Lua => ("--[[", "]]--"),
+        Language::Nim => ("#[", "]#"),
+        Language::Perl => ("=", "=cut"),
+        Language::Powershell => ("<#", "#>"),
+        Language::Python => ("'''", "'''"), // FIXME: '"""' is also valid
+        Language::Ruby => ("=begin", "=end"),
 
         // FIXME: D has multiple different ways to comment out code
         // TBD if I care enough to handle all those cases
-        Language::D => Some(("/*", "*/")),
-        _ => None,
-    }
-    .map(|b| (b.0.into(), b.1.into()))
+        Language::D => ("/*", "*/"),
+        Language::Astro | Language::Svelte => ("<!--", "-->"),
+        _ => return None,
+    };
+
+    Some((tokens.0.into(), tokens.1.into()))
 }
 
 #[cfg(test)]

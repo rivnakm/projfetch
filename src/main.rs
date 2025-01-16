@@ -85,15 +85,12 @@ fn main() {
                     let sloc = reader.sloc();
 
                     if let std::collections::hash_map::Entry::Vacant(e) = results.entry(lang) {
-                        match args.exclude {
-                            Some(ref arr) => {
-                                for exclude in arr {
-                                    if lang.to_string().to_lowercase() == exclude.to_lowercase() {
-                                        continue 'outer;
-                                    }
+                        if let Some(ref arr) = args.exclude {
+                            for exclude in arr {
+                                if lang.to_string().to_lowercase() == exclude.to_lowercase() {
+                                    continue 'outer;
                                 }
-                            },
-                            None => (),
+                            }
                         };
                         e.insert(sloc);
                     } else {
