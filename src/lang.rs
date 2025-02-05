@@ -18,6 +18,7 @@ pub enum Language {
     Fish,
     Fortran,
     FSharp,
+    GDScript,
     Gherkin,
     Go,
     Haskell,
@@ -88,6 +89,7 @@ impl Language {
             Language::Fortran => Color::Rgb(115, 79, 150), // rgb(115, 79, 150)
             Language::FSharp => Color::Rgb(48, 185, 219), // rgb(48, 185, 219)
             Language::Gherkin => Color::Rgb(0, 168, 24), // rgb(0, 168, 24)
+            Language::GDScript => Color::Rgb(53, 85, 112),   // rgb(53, 85, 112)
             Language::Go => Color::Rgb(1, 173, 216),   // rgb(1, 173, 216)
             Language::Haskell => Color::Rgb(94, 80, 134), // rgb(94, 80, 134)
             Language::Hcl => Color::Rgb(123, 66, 188), // rgb(123, 66, 188)
@@ -158,6 +160,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"feature" => Language::Gherkin,
             b"fish" => Language::Fish,
             b"fs" => Language::FSharp,
+            b"gd" => Language::GDScript,
             b"go" => Language::Go,
             b"h" => disambiguate_header(path),
             b"hpp" => Language::CPlusPlus,
