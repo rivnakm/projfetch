@@ -36,6 +36,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - Fish
 - Fortran
 - F#
+- GDScript
 - Go
 - Haskell
 - HCL
