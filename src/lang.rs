@@ -43,6 +43,8 @@ pub enum Language {
     React,
     Ruby,
     Rust,
+    Sass,
+    SCSS,
     Shell,
     Svelte,
     TypeScript,
@@ -114,6 +116,8 @@ impl Language {
             Language::React => Color::Rgb(97, 219, 251), // rgb(97, 219, 251)
             Language::Ruby => Color::Rgb(204, 52, 45), // rgb(204, 52, 45)
             Language::Rust => Color::Rgb(255, 67, 0),  // rgb(255, 67, 0)
+            Language::Sass => Color::Rgb(165, 59, 112),
+            Language::SCSS => Color::Rgb(198, 83, 140),
             Language::Shell => Color::Rgb(80, 80, 80), // rgb(80, 80, 80)
             Language::Svelte => Color::Rgb(255, 62, 0), // rgb(255, 62, 0)
             Language::TypeScript => Color::Rgb(49, 120, 198), // rgb(49, 120, 198)
@@ -192,6 +196,8 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"razor" => Language::Razor,
             b"rb" => Language::Ruby,
             b"rs" => Language::Rust,
+            b"sass" => Language::Sass,
+            b"scss" => Language::SCSS,
             b"sh" => Language::Shell,
             b"svelte" => Language::Svelte,
             b"tesc" => Language::Glsl,
