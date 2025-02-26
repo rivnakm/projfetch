@@ -20,6 +20,7 @@ pub enum Language {
     FSharp,
     GDScript,
     Gherkin,
+    Glsl,
     Go,
     Haskell,
     Hcl,
@@ -59,6 +60,7 @@ impl Display for Language {
             Language::CSharp => "C#",
             Language::Css => "CSS",
             Language::FSharp => "F#",
+            Language::Glsl => "GLSL",
             Language::Hcl => "HCL",
             Language::Html => "HTML",
             Language::Php => "PHP",
@@ -88,8 +90,9 @@ impl Language {
             Language::Fish => Color::Rgb(180, 180, 180), // rgb(180, 180, 180)
             Language::Fortran => Color::Rgb(115, 79, 150), // rgb(115, 79, 150)
             Language::FSharp => Color::Rgb(48, 185, 219), // rgb(48, 185, 219)
+            Language::GDScript => Color::Rgb(53, 85, 112), // rgb(53, 85, 112)
             Language::Gherkin => Color::Rgb(0, 168, 24), // rgb(0, 168, 24)
-            Language::GDScript => Color::Rgb(53, 85, 112),   // rgb(53, 85, 112)
+            Language::Glsl => Color::Rgb(85, 134, 164), // rgb(85, 134, 164)
             Language::Go => Color::Rgb(1, 173, 216),   // rgb(1, 173, 216)
             Language::Haskell => Color::Rgb(94, 80, 134), // rgb(94, 80, 134)
             Language::Hcl => Color::Rgb(123, 66, 188), // rgb(123, 66, 188)
@@ -143,6 +146,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"c" => Language::C,
             b"cc" => Language::CPlusPlus,
             b"cob" => Language::Cobol,
+            b"comp" => Language::Glsl,
             b"cpp" => Language::CPlusPlus,
             b"cppm" => Language::CPlusPlus,
             b"cxx" => Language::CPlusPlus,
@@ -159,8 +163,11 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"f15" => Language::Fortran,
             b"feature" => Language::Gherkin,
             b"fish" => Language::Fish,
+            b"frag" => Language::Glsl,
             b"fs" => Language::FSharp,
             b"gd" => Language::GDScript,
+            b"geom" => Language::Glsl,
+            b"glsl" => Language::Glsl,
             b"go" => Language::Go,
             b"h" => disambiguate_header(path),
             b"hpp" => Language::CPlusPlus,
@@ -187,11 +194,14 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"rs" => Language::Rust,
             b"sh" => Language::Shell,
             b"svelte" => Language::Svelte,
+            b"tesc" => Language::Glsl,
+            b"tese" => Language::Glsl,
             b"tf" => Language::Hcl,
             b"ts" => Language::TypeScript,
             b"tsx" => Language::React,
             b"v" => Language::V,
             b"vb" => Language::VisualBasic,
+            b"vert" => Language::Glsl,
             b"vue" => Language::Vue,
             b"zig" => Language::Zig,
             b"zsh" => Language::Shell,

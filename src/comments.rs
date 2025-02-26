@@ -104,6 +104,7 @@ fn comment_token(lang: Language) -> Option<String> {
             | Language::D
             | Language::Dart
             | Language::FSharp
+            | Language::Glsl
             | Language::Go
             | Language::Java
             | Language::JavaScript
@@ -131,6 +132,7 @@ fn block_comment_tokens(lang: Language) -> Option<(String, String)> {
         | Language::CSharp
         | Language::Css
         | Language::Dart
+        | Language::Glsl
         | Language::Go
         | Language::Java
         | Language::JavaScript
