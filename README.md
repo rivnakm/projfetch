@@ -59,6 +59,8 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - React
 - Ruby
 - Rust
+- Sass
+- SCSS
 - Shell
 - Svelte
 - TypeScript
