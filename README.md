@@ -37,6 +37,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
 - Fortran
 - F#
 - GDScript
+- GLSL
 - Go
 - Haskell
 - HCL

@@ -343,7 +343,7 @@ dependencies = [
 
 [[package]]
 name = "projfetch"
-version = "0.5.3"
+version = "0.5.4"
 dependencies = [
  "clap",
  "crossterm",

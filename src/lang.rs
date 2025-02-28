@@ -67,6 +67,7 @@ impl Display for Language {
             Language::Html => "HTML",
             Language::Php => "PHP",
             Language::Qml => "QML",
+            Language::Scss => "SCSS",
             Language::VisualBasic => "Visual Basic",
             _ => &format!("{:?}", self),
         };
@@ -116,8 +117,8 @@ impl Language {
             Language::React => Color::Rgb(97, 219, 251), // rgb(97, 219, 251)
             Language::Ruby => Color::Rgb(204, 52, 45), // rgb(204, 52, 45)
             Language::Rust => Color::Rgb(255, 67, 0),  // rgb(255, 67, 0)
-            Language::Sass => Color::Rgb(165, 59, 112),
-            Language::SCSS => Color::Rgb(198, 83, 140),
+            Language::Sass => Color::Rgb(165, 59, 112), // rgb(165, 59, 112)
+            Language::Scss => Color::Rgb(198, 83, 140), // rgb(198, 83, 140)
             Language::Shell => Color::Rgb(80, 80, 80), // rgb(80, 80, 80)
             Language::Svelte => Color::Rgb(255, 62, 0), // rgb(255, 62, 0)
             Language::TypeScript => Color::Rgb(49, 120, 198), // rgb(49, 120, 198)
@@ -132,10 +133,15 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
     match path.file_name() {
         Some(os_str) => match os_str.as_encoded_bytes() {
             b"CMakeLists.txt" => return Some(Language::CMake),
-            b"Containerfile" => return Some(Language::Dockerfile),
-            b"Dockerfile" => return Some(Language::Dockerfile),
             b"Makefile" | b"makefile" => return Some(Language::Makefile),
-            _ => (),
+            _ => {
+                let filename_string = os_str.to_string_lossy();
+                if filename_string.starts_with("Containerfile")
+                    || filename_string.starts_with("Dockerfile")
+                {
+                    return Some(Language::Dockerfile);
+                }
+            }
         },
         None => return None,
     }
@@ -197,7 +203,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"rb" => Language::Ruby,
             b"rs" => Language::Rust,
             b"sass" => Language::Sass,
-            b"scss" => Language::SCSS,
+            b"scss" => Language::Scss,
             b"sh" => Language::Shell,
             b"svelte" => Language::Svelte,
             b"tesc" => Language::Glsl,
