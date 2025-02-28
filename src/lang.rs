@@ -44,7 +44,7 @@ pub enum Language {
     Ruby,
     Rust,
     Sass,
-    SCSS,
+    Scss,
     Shell,
     Svelte,
     TypeScript,
