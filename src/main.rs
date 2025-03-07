@@ -71,7 +71,7 @@ fn main() {
 
     let mut builder = WalkBuilder::new(pwd.clone());
     if args.gitignore {
-        builder.git_ignore(false);
+        builder.git_ignore(false).ignore(false);
     };
     let walk = builder.build();
 
