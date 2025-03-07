@@ -46,6 +46,10 @@ struct Args {
     #[arg(short, long)]
     exclude: Option<Vec<String>>,
 
+    /// Include .gitignore files
+    #[arg(short, long)]
+    gitignore: bool,
+
     /// Path to search
     path: Option<String>,
 }
@@ -65,7 +69,10 @@ fn main() {
         }
     };
 
-    let builder = WalkBuilder::new(pwd.clone());
+    let mut builder = WalkBuilder::new(pwd.clone());
+    if args.gitignore {
+        builder.git_ignore(false);
+    };
     let walk = builder.build();
 
     let mut results: HashMap<Language, usize> = HashMap::new();
