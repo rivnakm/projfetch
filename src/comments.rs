@@ -155,9 +155,12 @@ fn block_comment_tokens(lang: Language) -> Option<(String, String)> {
         // FIXME: D has multiple different ways to comment out code
         // TBD if I care enough to handle all those cases
         Language::D => ("/*", "*/"),
-        Language::Astro | Language::Html | Language::Razor | Language::Svelte | Language::Vue => {
-            ("<!--", "-->")
-        }
+        Language::Astro
+        | Language::Html
+        | Language::Razor
+        | Language::Svelte
+        | Language::Vue
+        | Language::Xaml => ("<!--", "-->"),
         _ => return None,
     };
 
