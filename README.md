@@ -18,7 +18,7 @@ Run `projfetch` in a directory to see the language distribution.
 
 You can use the `--count/-n N` flag to only display at most the top `N` languages, or the `--all/-a` flag to show them all. The default is 10
 
-Files/directories can also be ignored with a `.gitignore` or `.ignore` file.
+Files/directories can also be ignored with a `.gitignore` or `.ignore` file. This feature is disable with the `--gitignore` flag.
 
 ## Supported filetypes
 
