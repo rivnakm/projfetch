@@ -113,7 +113,7 @@ fn comment_token(lang: Language) -> Option<String> {
             | Language::TypeScript
             | Language::V
             | Language::Zig => "//",
-            Language::Ada | Language::Haskell | Language::Lua => "--",
+            Language::Ada | Language::Haskell | Language::Lua | Language::Sql => "--",
             Language::Cobol => "*>",
             Language::Fortran => "!",
             Language::OCaml => "\0", // OCaml doesn't technically have single line comments
@@ -140,6 +140,7 @@ fn block_comment_tokens(lang: Language) -> Option<(String, String)> {
         | Language::Php
         | Language::Qml
         | Language::React
+        | Language::Sql
         | Language::TypeScript
         | Language::V => ("/*", "*/"),
         Language::CMake => ("#[[", "]]"),
