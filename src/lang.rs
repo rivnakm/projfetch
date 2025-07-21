@@ -46,6 +46,7 @@ pub enum Language {
     Sass,
     Scss,
     Shell,
+    Sql,
     Svelte,
     TypeScript,
     V,
@@ -69,6 +70,7 @@ impl Display for Language {
             Language::Php => "PHP",
             Language::Qml => "QML",
             Language::Scss => "SCSS",
+            Language::Sql => "SQL",
             Language::VisualBasic => "Visual Basic",
             Language::Xaml => "XAML",
             _ => &format!("{:?}", self),
@@ -124,6 +126,7 @@ impl Language {
             Language::Sass => Color::Rgb(165, 59, 112), // rgb(165, 59, 112)
             Language::Scss => Color::Rgb(198, 83, 140), // rgb(198, 83, 140)
             Language::Shell => Color::Rgb(80, 80, 80), // rgb(80, 80, 80)
+            Language::Sql => Color::Rgb(160, 160, 160), // rgb(160, 160, 160)
             Language::Svelte => Color::Rgb(255, 62, 0), // rgb(255, 62, 0)
             Language::TypeScript => Color::Rgb(49, 120, 198), // rgb(49, 120, 198)
             Language::V => Color::Rgb(60, 86, 109), // rgb(60, 86, 109)
@@ -210,6 +213,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"sass" => Language::Sass,
             b"scss" => Language::Scss,
             b"sh" => Language::Shell,
+            b"sql" => Language::Sql,
             b"svelte" => Language::Svelte,
             b"tesc" => Language::Glsl,
             b"tese" => Language::Glsl,
