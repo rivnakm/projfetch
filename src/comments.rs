@@ -108,6 +108,7 @@ fn comment_token(lang: Language) -> Option<String> {
             | Language::Go
             | Language::Java
             | Language::JavaScript
+            | Language::Protobuf
             | Language::React
             | Language::Rust
             | Language::TypeScript
