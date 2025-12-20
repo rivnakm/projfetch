@@ -37,6 +37,7 @@ pub enum Language {
     Perl,
     Php,
     Powershell,
+    Protobuf,
     Python,
     Qml,
     Razor,
@@ -118,6 +119,7 @@ impl Language {
             Language::Perl => Color::Rgb(57, 69, 126), // rgb(57, 69, 126)
             Language::Php => Color::Rgb(119, 123, 179), // rgb(119, 123, 179)
             Language::Powershell => Color::Rgb(83, 145, 254), // rgb(83, 145, 254)
+            Language::Protobuf => Color::Rgb(66, 133, 244), // rgb(66, 133, 244)
             Language::Python => Color::Rgb(255, 221, 84), // rgb(255, 221, 84)
             Language::Qml => Color::Rgb(44, 222, 133), // rgb(44, 222, 133)
             Language::React => Color::Rgb(97, 219, 251), // rgb(97, 219, 251)
@@ -204,6 +206,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"nu" => Language::Nu,
             b"php" => Language::Php,
             b"pl" => Language::Perl,
+            b"proto" => Language::Protobuf,
             b"ps1" => Language::Powershell,
             b"py" => Language::Python,
             b"qml" => Language::Qml,
