@@ -26,8 +26,8 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file. Thi
 - Astro
 - C
 - CMake
-- CSS
 - COBOL
+- CSS
 - C++
 - C#
 - D
@@ -37,6 +37,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file. Thi
 - Fortran
 - F#
 - GDScript
+- Gherkin
 - GLSL
 - Go
 - Haskell
@@ -64,9 +65,11 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file. Thi
 - Sass
 - SCSS
 - Shell
+- SQL
 - Svelte
 - TypeScript
 - V
-- Vue
 - Visual Basic
+- Vue
+- XAML
 - Zig
