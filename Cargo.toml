@@ -1,15 +1,20 @@
 [package]
 name = "projfetch"
-version = "0.5.4"
-edition = "2021"
+version = "0.6.0"
+edition = "2024"
 
 [dependencies]
-clap = { version = "4.5.15", features = ["derive"] }
-crossterm = "0.28.1"
+clap = { version = "4.5.53", features = ["derive"] }
 human-repr = "1.1.0"
-ignore = "0.4.22"
-itertools = "0.13.0"
+ignore = "0.4.25"
+itertools = "0.14.0"
 termcolor = "1.4.1"
+
+[target.'cfg(windows)'.dependencies]
+crossterm = { version = "0.29.0", features = ["windows"] }
+
+[target.'cfg(not(windows))'.dependencies]
+crossterm = "0.29.0"
 
 [dev-dependencies]
 test-case = "3.3.1"
