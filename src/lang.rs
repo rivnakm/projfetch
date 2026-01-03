@@ -5,6 +5,7 @@ use termcolor::Color;
 #[derive(Clone, Copy, Debug, Hash, Eq, PartialEq)]
 pub enum Language {
     Ada,
+    Antlr,
     Astro,
     C,
     CMake,
@@ -60,6 +61,7 @@ pub enum Language {
 impl Display for Language {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let name = match self {
+            Language::Antlr => "ANTLR",
             Language::Cobol => "COBOL",
             Language::CPlusPlus => "C++",
             Language::CSharp => "C#",
@@ -85,6 +87,7 @@ impl Language {
         match self {
             // The color comments are just for nvim-highlight-colors
             Language::Ada => Color::Rgb(0, 0, 255), // rgb(0, 0, 255)
+            Language::Antlr => Color::Rgb(236, 49, 46), // rgb(236, 49, 46)
             Language::Astro => Color::Rgb(226, 57, 137), // rgb(226, 57, 137)
             Language::C => Color::Rgb(0, 89, 156),  // rgb(0, 89, 156)
             Language::CMake => Color::Rgb(0, 143, 186), // rgb(0, 143, 186)
@@ -189,6 +192,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"geom" => Language::Glsl,
             b"glsl" => Language::Glsl,
             b"go" => Language::Go,
+            b"g4" => Language::Antlr,
             b"h" => disambiguate_header(path),
             b"hpp" => Language::CPlusPlus,
             b"hs" => Language::Haskell,

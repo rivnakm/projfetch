@@ -98,7 +98,8 @@ fn comment_token(lang: Language) -> Option<String> {
             | Language::Qml
             | Language::Ruby
             | Language::Shell => "#",
-            Language::C
+            Language::Antlr
+            | Language::C
             | Language::CPlusPlus
             | Language::CSharp
             | Language::D
