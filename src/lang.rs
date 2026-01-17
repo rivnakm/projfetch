@@ -6,6 +6,7 @@ use termcolor::Color;
 pub enum Language {
     Ada,
     Antlr,
+    Assembly,
     Astro,
     C,
     CMake,
@@ -88,6 +89,7 @@ impl Language {
             // The color comments are just for nvim-highlight-colors
             Language::Ada => Color::Rgb(0, 0, 255), // rgb(0, 0, 255)
             Language::Antlr => Color::Rgb(236, 49, 46), // rgb(236, 49, 46)
+            Language::Assembly => Color::Rgb(0, 0, 127), // rgb(0, 0, 127)
             Language::Astro => Color::Rgb(226, 57, 137), // rgb(226, 57, 137)
             Language::C => Color::Rgb(0, 89, 156),  // rgb(0, 89, 156)
             Language::CMake => Color::Rgb(0, 143, 186), // rgb(0, 143, 186)
@@ -163,6 +165,7 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
         Some(os_str) => Some(match os_str.as_encoded_bytes() {
             b"adb" => Language::Ada,
             b"ads" => Language::Ada,
+            b"asm" => Language::Assembly,
             b"astro" => Language::Astro,
             b"axaml" => Language::Xaml,
             b"bash" => Language::Shell,
@@ -217,6 +220,8 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"razor" => Language::Razor,
             b"rb" => Language::Ruby,
             b"rs" => Language::Rust,
+            b"s" => Language::Assembly,
+            b"S" => Language::Assembly,
             b"sass" => Language::Sass,
             b"scss" => Language::Scss,
             b"sh" => Language::Shell,
@@ -244,6 +249,8 @@ fn disambiguate_header(path: PathBuf) -> Language {
 
     if contents.contains("<string>")
         || contents.contains("<vector>")
+        || contents.contains("<utilty>")
+        || contents.contains("<memory>")
         || contents.contains("<iostream>")
         || contents.contains("template")
         || contents.contains("namespace")
