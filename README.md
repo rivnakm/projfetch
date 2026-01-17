@@ -23,6 +23,8 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file. Thi
 ## Supported filetypes
 
 - Ada
+- ANTLR
+- Assembly
 - Astro
 - C
 - CMake
