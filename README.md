@@ -50,6 +50,7 @@ Files/directories can also be ignored with a `.gitignore` or `.ignore` file. Thi
 - Julia
 - Lua
 - Makefile
+- Meson
 - Nim
 - Nix
 - Nu
