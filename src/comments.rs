@@ -89,6 +89,7 @@ fn comment_token(lang: Language) -> Option<String> {
             | Language::Hcl
             | Language::Julia
             | Language::Makefile
+            | Language::Meson
             | Language::Nim
             | Language::Nix
             | Language::Nu

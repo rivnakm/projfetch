@@ -32,6 +32,7 @@ pub enum Language {
     Julia,
     Lua,
     Makefile,
+    Meson,
     Nim,
     Nix,
     Nu,
@@ -117,6 +118,7 @@ impl Language {
             Language::Julia => Color::Rgb(149, 88, 178), // rgb(149, 88, 178)
             Language::Lua => Color::Rgb(0, 0, 128), // rgb(0, 0, 128)
             Language::Makefile => Color::Rgb(63, 63, 63), // rgb(63, 63, 63)
+            Language::Meson => Color::Rgb(57, 32, 124), // rgb(57, 32, 124)
             Language::Nim => Color::Rgb(255, 233, 83), // rgb(255, 233, 83)
             Language::Nix => Color::Rgb(126, 126, 255), // rgb(126, 126, 255)
             Language::Nu => Color::Rgb(78, 154, 6), // rgb(78, 154, 6)
@@ -154,6 +156,9 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
                     || filename_string.starts_with("Dockerfile")
                 {
                     return Some(Language::Dockerfile);
+                }
+                if filename_string.starts_with("meson.") {
+                    return Some(Language::Meson);
                 }
             }
         },
