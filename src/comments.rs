@@ -116,6 +116,8 @@ fn comment_token(lang: Language) -> Option<String> {
             | Language::TypeScript
             | Language::V
             | Language::Zig => "//",
+            #[cfg(feature = "mars-lang")]
+            Language::Mars => "//",
             Language::Ada | Language::Haskell | Language::Lua | Language::Sql => "--",
             Language::Cobol => "*>",
             Language::Fortran => "!",
@@ -146,6 +148,8 @@ fn block_comment_tokens(lang: Language) -> Option<(String, String)> {
         | Language::Sql
         | Language::TypeScript
         | Language::V => ("/*", "*/"),
+        #[cfg(feature = "mars-lang")]
+        Language::Mars => ("/*", "*/"),
         Language::CMake => ("#[[", "]]"),
         Language::FSharp | Language::OCaml => ("(*", "*)"),
         Language::Julia => ("#=", "=#"),

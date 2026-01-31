@@ -32,6 +32,8 @@ pub enum Language {
     Julia,
     Lua,
     Makefile,
+    #[cfg(feature = "mars-lang")]
+    Mars,
     Meson,
     Nim,
     Nix,
@@ -118,6 +120,8 @@ impl Language {
             Language::Julia => Color::Rgb(149, 88, 178), // rgb(149, 88, 178)
             Language::Lua => Color::Rgb(0, 0, 128), // rgb(0, 0, 128)
             Language::Makefile => Color::Rgb(63, 63, 63), // rgb(63, 63, 63)
+            #[cfg(feature = "mars-lang")]
+            Language::Mars => Color::Rgb(132, 58, 49), // rgb(132, 58, 49)
             Language::Meson => Color::Rgb(57, 32, 124), // rgb(57, 32, 124)
             Language::Nim => Color::Rgb(255, 233, 83), // rgb(255, 233, 83)
             Language::Nix => Color::Rgb(126, 126, 255), // rgb(126, 126, 255)
@@ -211,6 +215,8 @@ pub fn determine_language(path: PathBuf) -> Option<Language> {
             b"js" => Language::JavaScript,
             b"jsx" => Language::React,
             b"lua" => Language::Lua,
+            #[cfg(feature = "mars-lang")]
+            b"mars" => Language::Mars,
             b"ml" => Language::OCaml,
             b"mpp" => Language::CPlusPlus,
             b"nim" => Language::Nim,
