@@ -31,7 +31,7 @@ struct Args {
     compact: bool,
 
     /// Max width for compact mode
-    #[arg(short, long, requires = "compact")]
+    #[arg(short, long, conflicts_with = "summary")]
     max_width: Option<u16>,
 
     /// Display text summary of the top n languages
@@ -133,5 +133,5 @@ fn main() {
         results.take(args.count).collect()
     };
 
-    print_results(results, &pwd);
+    print_results(results, &pwd, args.max_width);
 }

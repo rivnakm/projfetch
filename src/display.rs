@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use crossterm::{cursor::MoveToColumn, ExecutableCommand};
+use crossterm::{ExecutableCommand, cursor::MoveToColumn};
 use human_repr::HumanCount;
 use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 
@@ -96,7 +96,7 @@ pub fn print_results_compact(results: Vec<(Language, usize)>, max_width: Option<
     println!();
 }
 
-pub fn print_results(results: Vec<(Language, usize)>, pwd: &Path) {
+pub fn print_results(results: Vec<(Language, usize)>, pwd: &Path, max_width: Option<u16>) {
     if results.is_empty() {
         return;
     }
@@ -120,11 +120,18 @@ pub fn print_results(results: Vec<(Language, usize)>, pwd: &Path) {
         .unwrap()
         .max(LINES_HEADER.len()) as u16;
 
-    let window_size = crossterm::terminal::window_size().expect("Couldn't get terminal size");
-    let bar_col_width = window_size.columns - lines_col_width - lang_col_width - 2; // -2 for
-                                                                                    // padding
+    let columns = match max_width {
+        Some(max_width) => max_width,
+        None => {
+            crossterm::terminal::window_size()
+                .expect("Couldn't get terminal size")
+                .columns
+        }
+    };
+    let bar_col_width = columns - lines_col_width - lang_col_width - 2; // -2 for
+    // padding
     let bar_col_start = lang_col_width + 1; // +1 for padding
-    let lines_col_start = window_size.columns - lines_col_width + 1; // +1 for padding
+    let lines_col_start = columns - lines_col_width + 1; // +1 for padding
 
     print!("{}", LANG_HEADER);
     std::io::stdout()
