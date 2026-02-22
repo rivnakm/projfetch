@@ -1,10 +1,10 @@
 [package]
 name = "projfetch"
-version = "0.6.0"
+version = "0.7.0"
 edition = "2024"
 
 [dependencies]
-clap = { version = "4.5.53", features = ["derive"] }
+clap = { version = "4.5.60", features = ["derive"] }
 human-repr = "1.1.0"
 ignore = "0.4.25"
 itertools = "0.14.0"

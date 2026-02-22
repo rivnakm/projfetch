@@ -120,14 +120,12 @@ pub fn print_results(results: Vec<(Language, usize)>, pwd: &Path, max_width: Opt
         .unwrap()
         .max(LINES_HEADER.len()) as u16;
 
+    let window_size = crossterm::terminal::window_size().expect("Couldn't get terminal size");
     let columns = match max_width {
-        Some(max_width) => max_width,
-        None => {
-            crossterm::terminal::window_size()
-                .expect("Couldn't get terminal size")
-                .columns
-        }
+        Some(max_width) => max_width.min(window_size.columns),
+        None => window_size.columns,
     };
+
     let bar_col_width = columns - lines_col_width - lang_col_width - 2; // -2 for
     // padding
     let bar_col_start = lang_col_width + 1; // +1 for padding
